@@ -13,6 +13,16 @@ public class OrderDTO {
 
     ClientInfo clientInfo;
 
+    CarInfo carInfo;
+
+    public CarInfo getCarInfo() {
+        return carInfo;
+    }
+
+    public void setCarInfo(CarInfo carInfo) {
+        this.carInfo = carInfo;
+    }
+
     public ClientInfo getClientInfo() {
         return clientInfo;
     }
