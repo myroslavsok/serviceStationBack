@@ -21,5 +21,20 @@ public class Make {
     @OneToMany(mappedBy="make", cascade = CascadeType.ALL)
     private Set<Model> models;
 
+    public Set<Model> getModels() {
+        return models;
+    }
+
+    public void setModels(Set<Model> models) {
+        this.models = models;
+    }
+
+    public String getMakeName() {
+        return makeName;
+    }
+
+    public void setMakeName(String makeName) {
+        this.makeName = makeName;
+    }
 
 }

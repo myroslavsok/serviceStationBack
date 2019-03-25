@@ -20,4 +20,20 @@ public class Model {
     @JsonIgnore
     private Make make;
 
+    public Make getMake() {
+        return make;
+    }
+
+    public void setMake(Make make) {
+        this.make = make;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
 }

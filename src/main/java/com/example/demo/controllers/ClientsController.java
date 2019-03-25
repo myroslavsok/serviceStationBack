@@ -22,9 +22,9 @@ public class ClientsController {
         return clientRepository.findAll();
     }
 
-    @PostMapping
-    public Client addNewTask(@RequestBody Client client) {
-        return clientRepository.save(new Client(client.getName(), client.getPhoneNumber()));
-    }
+//    @PostMapping
+//    public Client addNewTask(@RequestBody Client client) {
+//        return clientRepository.save(new Client(client.getName(), client.getPhoneNumber()));
+//    }
 
 }

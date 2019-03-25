@@ -24,4 +24,36 @@ public class Car {
     @JsonIgnore
     private Make make;
 
+    public String getVinCode() {
+        return vinCode;
+    }
+
+    public void setVinCode(String vinCode) {
+        this.vinCode = vinCode;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Make getMake() {
+        return make;
+    }
+
+    public void setMake(Make make) {
+        this.make = make;
+    }
+
 }
