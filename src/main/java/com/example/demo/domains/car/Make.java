@@ -16,6 +16,11 @@ public class Make {
         this.makeName = name;
     }
 
+    public Make(Long id, String name) {
+        this.id = id;
+        this.makeName = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

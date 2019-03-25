@@ -9,10 +9,20 @@ public class Car {
 
     public Car() {}
 
-    public Car(String vinCode, String number, String year, Make make) {
+    public Car(String vinCode, String number, String year, String miles, Make make) {
         this.vinCode = vinCode;
         this.number = number;
         this.year = year;
+        this.miles = miles;
+        this.make = make;
+    }
+
+    public Car(Long id, String vinCode, String number, String year, String miles, Make make) {
+        this.id = id;
+        this.vinCode = vinCode;
+        this.number = number;
+        this.year = year;
+        this.miles = miles;
         this.make = make;
     }
 
@@ -25,6 +35,8 @@ public class Car {
     private String number;
 
     private String year;
+
+    private String miles;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "make_id")
@@ -61,6 +73,14 @@ public class Car {
 
     public void setMake(Make make) {
         this.make = make;
+    }
+
+    public String getMiles() {
+        return miles;
+    }
+
+    public void setMiles(String miles) {
+        this.miles = miles;
     }
 
 }

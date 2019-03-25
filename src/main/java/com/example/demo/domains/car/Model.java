@@ -14,6 +14,12 @@ public class Model {
         this.make = make;
     }
 
+    public Model(Long id, String name, Make make) {
+        this.id = id;
+        this.modelName = name;
+        this.make = make;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

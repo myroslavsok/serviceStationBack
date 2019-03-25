@@ -4,12 +4,10 @@ import com.example.demo.domains.Client;
 import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.DTO.OrderDTO;
+import com.example.demo.domains.car.Car;
 import com.example.demo.domains.car.Make;
 import com.example.demo.domains.car.Model;
-import com.example.demo.repositories.ClientRepository;
-import com.example.demo.repositories.MakeRepository;
-import com.example.demo.repositories.ModelRepository;
-import com.example.demo.repositories.OrderRepository;
+import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +28,9 @@ public class OrderController {
     @Autowired
     private ModelRepository modelRepository;
 
+    @Autowired
+    private CarRepository carRepository;
+
     private String unsetValue = "Не вказано";
 
     @PostMapping
@@ -44,24 +45,21 @@ public class OrderController {
         CarInfo carInfo = orderDTO.getCarInfo();
         String carMake = carInfo.getMake();
         String carModel = carInfo.getModel();
+        Make make = new Make(carMake);
         if (!carMake.equals(unsetValue) && !carMake.isEmpty() &&
                 !carModel.equals(unsetValue) && !carModel.isEmpty()) {
-            Make make = new Make(carMake);
             makeRepository.save(make);
             Model model = new Model(carModel, make);
             modelRepository.save(model);
         }
-
 
         // add car
         String carYear = carInfo.getYear();
         String carMiles = carInfo.getMiles();
         String carNumber = carInfo.getNumber();
         String carVinCode = carInfo.getVinCode();
-
-
-
-
+        Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
+        carRepository.save(car);
 
         return orderDTO;
     }
