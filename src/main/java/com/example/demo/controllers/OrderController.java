@@ -1,18 +1,18 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domains.Client;
 import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
+import com.example.demo.domains.DTO.DTOCars.CarPart;
 import com.example.demo.domains.DTO.OrderDTO;
 import com.example.demo.domains.car.Car;
 import com.example.demo.domains.car.Make;
 import com.example.demo.domains.car.Model;
+import com.example.demo.domains.car.Part;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -35,6 +35,12 @@ public class OrderController {
 
     @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    private PartRepository partRepository;
+
+    @Autowired
+    private BoughtPartRepository boughtPartRepository;
 
     private String unsetValue = "Не вказано";
 
@@ -86,7 +92,6 @@ public class OrderController {
             model = modelRepository.findById((long) 2).orElseThrow(Exception::new);
         }
 
-
         // add car
         String carYear = carInfo.getYear();
         String carMiles = carInfo.getMiles();
@@ -96,7 +101,35 @@ public class OrderController {
 //        carRepository.save(car);
 
 
+        // Add parts
+        List<CarPart> carParts = carInfo.getParts();
+        List<Part> existingParts = partRepository.findAll();
+        if (existingParts.size() >= 1) {
+            carParts.forEach(carPart -> {
+                AtomicBoolean partAlreadyExists = new AtomicBoolean(false);
+                existingParts.forEach(existingPart -> {
+                    if (carPart.getName().equals(existingPart.getName())) {
+                        partAlreadyExists.set(true);
+                    }
+                });
+                if (!partAlreadyExists.get()) {
+                    partRepository.save(new Part(carPart.getName(), carPart.getCost()));
+                }
+            });
+        } else {
+            carParts.forEach(carPart ->
+                    partRepository.save(new Part(carPart.getName(), carPart.getCost())));
+        }
+
+        // Add bought parts
+        List<Part> parts = partRepository.findAll();
+        carParts.forEach(carPart -> {
+
+//            boughtPartRepository.save()
+        });
+
         // add workInfo
+//        WorkInfo workInfo = orderDTO.getWorkInfo();
 
         return orderDTO;
     }
