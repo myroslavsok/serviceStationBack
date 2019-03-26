@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
+import java.util.List;
+
 @SpringBootApplication
 public class DemoApplication {
 
@@ -29,10 +31,17 @@ public class DemoApplication {
 		System.out.println("\n \n \n \n \n \n Starts \n \n \n \n \n \n");
 
 		String unsetValue = "Не вказано";
-		Make make = new Make(Long.valueOf("1"), unsetValue);
-		Model model = new Model(Long.valueOf("1"), unsetValue, make);
 
+		Make make = new Make(Long.valueOf("1"), unsetValue);
 		makeRepository.save(make);
-		modelRepository.save(model);
+
+		List<Model> defaultEntityModels = modelRepository.findByModelName(unsetValue);
+		if (defaultEntityModels.size() == 0) {
+			Model model = new Model(Long.valueOf("2"), unsetValue, make);
+			modelRepository.save(model);
+			System.out.println("add");
+		}
+		System.out.println("don't add");
+		defaultEntityModels.forEach(model -> System.out.println(model.getId() + "  " + model.getModelName()));
 	}
 }
