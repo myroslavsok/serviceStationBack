@@ -35,12 +35,14 @@ public class DemoApplication {
 		Make make = new Make(Long.valueOf("1"), unsetValue);
 		makeRepository.save(make);
 
+
 		List<Model> defaultEntityModels = modelRepository.findByModelName(unsetValue);
 		if (defaultEntityModels.size() == 0) {
 			Model model = new Model(Long.valueOf("2"), unsetValue, make);
 			modelRepository.save(model);
 			System.out.println("add");
 		}
+
 		System.out.println("don't add");
 		defaultEntityModels.forEach(model -> System.out.println(model.getId() + "  " + model.getModelName()));
 	}

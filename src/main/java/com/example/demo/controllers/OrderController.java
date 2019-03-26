@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domains.Client;
 import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.DTO.OrderDTO;
@@ -10,6 +9,11 @@ import com.example.demo.domains.car.Model;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("orders")
@@ -34,7 +38,7 @@ public class OrderController {
     private String unsetValue = "Не вказано";
 
     @PostMapping
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) {
+    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
         // add client
         ClientInfo clientInfo = orderDTO.getClientInfo();
         String clientName = clientInfo.getName();
@@ -45,13 +49,42 @@ public class OrderController {
         CarInfo carInfo = orderDTO.getCarInfo();
         String carMake = carInfo.getMake();
         String carModel = carInfo.getModel();
-        Make make = new Make(carMake);
+
+        Make make;
+        Model model;
         if (!carMake.equals(unsetValue) && !carMake.isEmpty() &&
-                !carModel.equals(unsetValue) && !carModel.isEmpty()) {
-            makeRepository.save(make);
-            Model model = new Model(carModel, make);
-            modelRepository.save(model);
+                !carModel.equals(unsetValue) && git!carModel.isEmpty()) {
+
+            // Check for existance of make
+            ArrayList<Make> existingMakes = makeRepository.findByMakeName(carMake);
+            if (existingMakes.size() >= 1) {
+                make = existingMakes.get(0);
+                // Getting model of existing make
+                boolean isModelAlreadyExists = false;
+                for (Model existingModel : make.getModels()) {
+                    if (existingModel.getModelName().equals(carModel)) {
+                        model = existingModel;
+                        isModelAlreadyExists = true;
+                    }
+                }
+                if (!isModelAlreadyExists) {
+                    model = new Model(carModel, make);
+                    modelRepository.save(model);
+                }
+            } else {
+                // Model can't exist without make
+                make = new Make(carMake);
+                model = new Model(carModel, make);
+                makeRepository.save(make);
+                modelRepository.save(model);
+            }
+
+        } else {
+            // get defaults values of Make and Model
+            make = makeRepository.findById((long) 1).orElseThrow(Exception::new);
+            model = modelRepository.findById((long) 2).orElseThrow(Exception::new);
         }
+
 
         // add car
         String carYear = carInfo.getYear();

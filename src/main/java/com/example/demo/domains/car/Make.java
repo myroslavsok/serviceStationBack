@@ -3,6 +3,7 @@ package com.example.demo.domains.car;
 import com.example.demo.domains.Client;
 import com.example.demo.domains.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Set;
