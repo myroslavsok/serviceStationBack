@@ -4,10 +4,7 @@ import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.DTO.DTOCars.CarPart;
 import com.example.demo.domains.DTO.OrderDTO;
-import com.example.demo.domains.car.Car;
-import com.example.demo.domains.car.Make;
-import com.example.demo.domains.car.Model;
-import com.example.demo.domains.car.Part;
+import com.example.demo.domains.car.*;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -98,8 +95,7 @@ public class OrderController {
         String carNumber = carInfo.getNumber();
         String carVinCode = carInfo.getVinCode();
         Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
-//        carRepository.save(car);
-
+        carRepository.save(car);
 
         // Add parts
         List<CarPart> carParts = carInfo.getParts();
@@ -122,10 +118,13 @@ public class OrderController {
         }
 
         // Add bought parts
-        List<Part> parts = partRepository.findAll();
+        List<Part> allExistingParts = partRepository.findAll();
         carParts.forEach(carPart -> {
-
-//            boughtPartRepository.save()
+            allExistingParts.forEach(existingPart -> {
+                if (carPart.getName().equals(existingPart.getName())) {
+                    boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
+                }
+            });
         });
 
         // add workInfo

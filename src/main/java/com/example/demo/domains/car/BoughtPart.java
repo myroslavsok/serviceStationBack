@@ -9,9 +9,10 @@ public class BoughtPart {
 
     public BoughtPart() {}
 
-    public BoughtPart(Part part, String cost) {
+    public BoughtPart(Part part, String cost, Car car) {
         this.part = part;
         this.cost = cost;
+        this.car = car;
     }
 
     @Id
@@ -24,6 +25,19 @@ public class BoughtPart {
     private Part part;
 
     private String cost;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_id")
+    @JsonIgnore
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     public Long getId() {
         return id;

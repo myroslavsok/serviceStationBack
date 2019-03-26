@@ -3,6 +3,7 @@ package com.example.demo.domains.car;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Car {
@@ -42,6 +43,9 @@ public class Car {
     @JoinColumn(name = "make_id")
     @JsonIgnore
     private Make make;
+
+    @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
+    private Set<BoughtPart> boughtParts;
 
     public String getVinCode() {
         return vinCode;
