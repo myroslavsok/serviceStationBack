@@ -1,5 +1,9 @@
 package com.example.demo.domains.DTO;
 
+import com.example.demo.domains.DTO.DTOCars.CarPart;
+
+import java.util.List;
+
 public class CarInfo {
 
     public CarInfo() {}
@@ -13,6 +17,18 @@ public class CarInfo {
     private String vinCode;
 
     private String make;
+
+    private String model;
+
+    private List<CarPart> parts;
+
+    public List<CarPart> getParts() {
+        return parts;
+    }
+
+    public void setParts(List<CarPart> parts) {
+        this.parts = parts;
+    }
 
     public String getNumber() {
         return number;
@@ -61,8 +77,6 @@ public class CarInfo {
     public void setModel(String model) {
         this.model = model;
     }
-
-    private String model;
 
 
 }

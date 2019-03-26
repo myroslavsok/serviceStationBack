@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domains.Client;
 import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.DTO.OrderDTO;
@@ -53,7 +54,7 @@ public class OrderController {
         Make make;
         Model model;
         if (!carMake.equals(unsetValue) && !carMake.isEmpty() &&
-                !carModel.equals(unsetValue) && git!carModel.isEmpty()) {
+                !carModel.equals(unsetValue) && !carModel.isEmpty()) {
 
             // Check for existance of make
             ArrayList<Make> existingMakes = makeRepository.findByMakeName(carMake);
@@ -92,7 +93,10 @@ public class OrderController {
         String carNumber = carInfo.getNumber();
         String carVinCode = carInfo.getVinCode();
         Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
-        carRepository.save(car);
+//        carRepository.save(car);
+
+
+        // add workInfo
 
         return orderDTO;
     }

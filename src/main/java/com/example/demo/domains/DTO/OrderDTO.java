@@ -15,6 +15,16 @@ public class OrderDTO {
 
     CarInfo carInfo;
 
+    WorkInfo workInfo;
+
+    public WorkInfo getWorkInfo() {
+        return workInfo;
+    }
+
+    public void setWorkInfo(WorkInfo workInfo) {
+        this.workInfo = workInfo;
+    }
+
     public CarInfo getCarInfo() {
         return carInfo;
     }
