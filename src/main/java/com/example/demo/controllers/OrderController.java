@@ -1,14 +1,18 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domains.Client;
 import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.DTO.DTOCars.CarPart;
 import com.example.demo.domains.DTO.OrderDTO;
+import com.example.demo.domains.DTO.WorkInfo;
+import com.example.demo.domains.Order;
 import com.example.demo.domains.car.*;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -47,7 +51,8 @@ public class OrderController {
         ClientInfo clientInfo = orderDTO.getClientInfo();
         String clientName = clientInfo.getName();
         String clientPhone = clientInfo.getPhoneNumber();
-//        clientRepository.save(new Client(clientName, clientPhone));
+        Client client = new Client(clientName, clientPhone);
+        clientRepository.save(client);
 
         // add make and model
         CarInfo carInfo = orderDTO.getCarInfo();
@@ -128,7 +133,16 @@ public class OrderController {
         });
 
         // add workInfo
-//        WorkInfo workInfo = orderDTO.getWorkInfo();
+        WorkInfo workInfo = orderDTO.getWorkInfo();
+        String doneWork = workInfo.getDoneWork();
+        Integer workCost = workInfo.getWorkCost();
+        Integer partsCost = workInfo.getPartsCost();
+        Integer totalCost = workInfo.getTotalCost();
+
+        // add order
+        LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
+        Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
+        orderRepository.save(order);
 
         return orderDTO;
     }

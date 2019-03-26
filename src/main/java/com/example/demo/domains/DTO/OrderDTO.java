@@ -4,6 +4,7 @@ import com.example.demo.domains.Client;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 
 
@@ -11,11 +12,21 @@ public class OrderDTO {
 
     public OrderDTO() {}
 
-    ClientInfo clientInfo;
+    private ClientInfo clientInfo;
 
-    CarInfo carInfo;
+    private CarInfo carInfo;
 
-    WorkInfo workInfo;
+    private WorkInfo workInfo;
+
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public WorkInfo getWorkInfo() {
         return workInfo;

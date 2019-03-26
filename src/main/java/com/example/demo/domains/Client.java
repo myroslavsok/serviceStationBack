@@ -22,6 +22,9 @@ public class Client {
 
     String phoneNumber;
 
+    @OneToMany(mappedBy="client", cascade = CascadeType.ALL)
+    private Set<Order> orders;
+
     public Long getId() {
         return id;
     }

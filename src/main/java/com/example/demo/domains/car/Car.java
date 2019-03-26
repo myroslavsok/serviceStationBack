@@ -1,5 +1,6 @@
 package com.example.demo.domains.car;
 
+import com.example.demo.domains.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -46,6 +47,33 @@ public class Car {
 
     @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
     private Set<BoughtPart> boughtParts;
+
+    @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
+    private Set<Order> orders;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<BoughtPart> getBoughtParts() {
+        return boughtParts;
+    }
+
+    public void setBoughtParts(Set<BoughtPart> boughtParts) {
+        this.boughtParts = boughtParts;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
 
     public String getVinCode() {
         return vinCode;
