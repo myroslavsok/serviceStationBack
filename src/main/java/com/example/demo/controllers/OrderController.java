@@ -162,19 +162,10 @@ public class OrderController {
         // Add bought parts
         addBoughtParts(carInfo, car);
 
-        // add workInfo
-        WorkInfo workInfo = orderDTO.getWorkInfo();
-
-        String doneWork = workInfo.getDoneWork();
-        Integer workCost = workInfo.getWorkCost();
-        Integer partsCost = workInfo.getPartsCost();
-        Integer totalCost = workInfo.getTotalCost();
-
         // add order
+        WorkInfo workInfo = orderDTO.getWorkInfo();
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
-//        Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
-//        Order order = new Order();
-//        orderRepository.save(order);
+        orderRepository.save(new Order(client, car, orderDate, workInfo));
 
         return orderDTO;
     }
