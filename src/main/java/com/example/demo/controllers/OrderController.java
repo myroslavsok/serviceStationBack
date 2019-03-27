@@ -111,20 +111,7 @@ public class OrderController {
         return carRepository.save(car);
     }
 
-    @PostMapping
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
-        // add client
-        Client client = addClientToDB(orderDTO.getClientInfo());
-
-        // add make and model
-        CarInfo carInfo = orderDTO.getCarInfo();
-        Model model = addMakeAndModelForIt(carInfo);
-
-        // add car
-        Car car = addCar(carInfo, model);
-
-        // add parts
-
+    private void addCarParts(CarInfo carInfo) {
         List<CarPart> carParts = carInfo.getParts();
         List<Part> existingParts = partRepository.findAll();
         if (existingParts.size() >= 1) {
@@ -143,19 +130,41 @@ public class OrderController {
             carParts.forEach(carPart ->
                     partRepository.save(new Part(carPart.getName(), carPart.getCost())));
         }
+    }
 
-        // Add bought parts
+    private void addBoughtParts(CarInfo carInfo, Car car) {
+        List<CarPart> carParts = carInfo.getParts();
         List<Part> allExistingParts = partRepository.findAll();
         carParts.forEach(carPart -> {
             allExistingParts.forEach(existingPart -> {
                 if (carPart.getName().equals(existingPart.getName())) {
-//                    boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
+                    boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
                 }
             });
         });
+    }
+
+    @PostMapping
+    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
+        // add client
+        Client client = addClientToDB(orderDTO.getClientInfo());
+
+        // add make and model
+        CarInfo carInfo = orderDTO.getCarInfo();
+        Model model = addMakeAndModelForIt(carInfo);
+
+        // add car
+        Car car = addCar(carInfo, model);
+
+        // add parts
+        addCarParts(carInfo);
+
+        // Add bought parts
+        addBoughtParts(carInfo, car);
 
         // add workInfo
         WorkInfo workInfo = orderDTO.getWorkInfo();
+
         String doneWork = workInfo.getDoneWork();
         Integer workCost = workInfo.getWorkCost();
         Integer partsCost = workInfo.getPartsCost();

@@ -1,5 +1,6 @@
 package com.example.demo.domains;
 
+import com.example.demo.domains.DTO.WorkInfo;
 import com.example.demo.domains.car.Car;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,14 +13,14 @@ public class Order {
 
     public Order() {}
 
-    public Order(Client client, Car car, LocalDate orderDate, String doneWork, Integer workCost, Integer partsCost, Integer totalCost) {
+    public Order(Client client, Car car, LocalDate orderDate, WorkInfo workInfo) {
         this.client = client;
         this.car = car;
         this.orderDate = orderDate;
         this.doneWork = doneWork;
-        this.workCost = workCost;
-        this.partsCost = partsCost;
-        this.totalCost = totalCost;
+        this.workCost = workInfo.getWorkCost();
+        this.partsCost = workInfo.getPartsCost();
+        this.totalCost = workInfo.getTotalCost();
     }
 
     @Id
@@ -36,6 +37,8 @@ public class Order {
     private Integer partsCost;
 
     private Integer totalCost;
+
+    private String status = "New";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
