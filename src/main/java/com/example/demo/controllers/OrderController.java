@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("orders")
@@ -104,8 +103,8 @@ public class OrderController {
         Car car = new Car(carInfo, model);
         // check for default
         if (car.getVinCode().equals(unsetValue) && car.getNumber().equals(unsetValue) &&
-            car.getYear().equals(unsetValue) && car.getMiles().equals(unsetValue) &&
-            car.getModel().getId() == 1) {
+                car.getYear().equals(unsetValue) && car.getMiles().equals(unsetValue) &&
+                car.getModel().getId() == 1) {
             return car;
         }
         return carRepository.save(car);
@@ -116,16 +115,16 @@ public class OrderController {
         carParts.forEach(carPart -> {
             List<Part> existingParts = partRepository.findAll();
             AtomicBoolean partAlreadyExists = new AtomicBoolean(false);
-                existingParts.forEach(existingPart -> {
-                    if (carPart.getName().equals(existingPart.getName()) &&
+            existingParts.forEach(existingPart -> {
+                if (carPart.getName().equals(existingPart.getName()) &&
                         carPart.getCost().equals(existingPart.getCost())) {
-                        partAlreadyExists.set(true);
-                    }
-                });
-                if (!partAlreadyExists.get()) {
-                    partRepository.save(new Part(carPart.getName(), carPart.getCost()));
+                    partAlreadyExists.set(true);
                 }
             });
+            if (!partAlreadyExists.get()) {
+                partRepository.save(new Part(carPart.getName(), carPart.getCost()));
+            }
+        });
     }
 
     private void addBoughtParts(CarInfo carInfo, Car car) {
@@ -164,6 +163,11 @@ public class OrderController {
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
         orderRepository.save(new Order(client, car, orderDate, workInfo));
         return orderDTO;
+    }
+
+    @GetMapping
+    public List<Order> sendAllOrders() {
+        return orderRepository.findAll();
     }
 
 }

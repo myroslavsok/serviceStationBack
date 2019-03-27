@@ -33,6 +33,14 @@ public class Client {
     @OneToMany(mappedBy="client", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
     public Long getId() {
         return id;
     }

@@ -51,5 +51,76 @@ public class Order {
     @JsonIgnore
     private Client client;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getDoneWork() {
+        return doneWork;
+    }
+
+    public void setDoneWork(String doneWork) {
+        this.doneWork = doneWork;
+    }
+
+    public Integer getWorkCost() {
+        return workCost;
+    }
+
+    public void setWorkCost(Integer workCost) {
+        this.workCost = workCost;
+    }
+
+    public Integer getPartsCost() {
+        return partsCost;
+    }
+
+    public void setPartsCost(Integer partsCost) {
+        this.partsCost = partsCost;
+    }
+
+    public Integer getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Integer totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
 }
