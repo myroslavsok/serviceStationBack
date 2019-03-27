@@ -121,13 +121,6 @@ public class OrderController {
         Model model = addMakeAndModelForIt(carInfo);
 
         // add car
-//        String carYear = carInfo.getYear();
-//        String carMiles = carInfo.getMiles();
-//        String carNumber = carInfo.getNumber();
-//        String carVinCode = carInfo.getVinCode();
-//        Car car = new Car(carVinCode, carNumber, carYear, carMiles, model);
-//        carRepository.save(car);
-
         Car car = addCar(carInfo, model);
 
         // Add parts
