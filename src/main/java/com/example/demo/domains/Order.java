@@ -7,33 +7,35 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name="\"Order\"")
 public class Order {
 
     public Order() {}
 
     public Order(Client client, Car car, LocalDate orderDate, String doneWork, Integer workCost, Integer partsCost, Integer totalCost) {
         this.client = client;
+        this.car = car;
         this.orderDate = orderDate;
         this.doneWork = doneWork;
         this.workCost = workCost;
         this.partsCost = partsCost;
         this.totalCost = totalCost;
-        this.car = car;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    LocalDate orderDate;
+    private LocalDate orderDate;
 
-    String doneWork;
+    @Column(columnDefinition="TEXT")
+    private String doneWork;
 
-    Integer workCost;
+    private Integer workCost;
 
-    Integer partsCost;
+    private Integer partsCost;
 
-    Integer totalCost;
+    private Integer totalCost;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
@@ -44,5 +46,6 @@ public class Order {
     @JoinColumn(name = "client_id")
     @JsonIgnore
     private Client client;
+
 
 }

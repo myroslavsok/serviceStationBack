@@ -10,6 +10,7 @@ import com.example.demo.domains.Order;
 import com.example.demo.domains.car.*;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -142,6 +143,7 @@ public class OrderController {
         // add order
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
         Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
+//        Order order = new Order();
         orderRepository.save(order);
 
         return orderDTO;
