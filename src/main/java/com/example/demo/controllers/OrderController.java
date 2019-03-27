@@ -46,14 +46,34 @@ public class OrderController {
 
     private String unsetValue = "Не вказано";
 
-    @PostMapping
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
-        // add client
-        ClientInfo clientInfo = orderDTO.getClientInfo();
+    private Client addClientToDB(ClientInfo clientInfo) throws Exception {
         String clientName = clientInfo.getName();
         String clientPhone = clientInfo.getPhoneNumber();
         Client client = new Client(clientName, clientPhone);
-        clientRepository.save(client);
+        // check for default and null
+        if (clientName.equals(unsetValue) || clientName.equals("")) {
+            long defaultClientId = 1;
+            return clientRepository.findById(defaultClientId).orElseThrow(Exception::new);
+        } else {
+            // check for existing
+            List<Client> existingClients = clientRepository.findByNameAndPhoneNumber(clientName, clientPhone);
+            if (existingClients.size() < 1) {
+                clientRepository.save(client);
+            }
+            return client;
+        }
+    }
+
+    @PostMapping
+    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
+        // add client
+//        ClientInfo clientInfo = orderDTO.getClientInfo();
+//        String clientName = clientInfo.getName();
+//        String clientPhone = clientInfo.getPhoneNumber();
+//        Client client = new Client(clientName, clientPhone);
+//        clientRepository.save(client);
+
+        Client client = addClientToDB(orderDTO.getClientInfo());
 
         // add make and model
         CarInfo carInfo = orderDTO.getCarInfo();
@@ -92,7 +112,7 @@ public class OrderController {
         } else {
             // get defaults values of Make and Model
             make = makeRepository.findById((long) 1).orElseThrow(Exception::new);
-            model = modelRepository.findById((long) 2).orElseThrow(Exception::new);
+            model = modelRepository.findById((long) 1).orElseThrow(Exception::new);
         }
 
         // add car
@@ -101,7 +121,7 @@ public class OrderController {
         String carNumber = carInfo.getNumber();
         String carVinCode = carInfo.getVinCode();
         Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
-        carRepository.save(car);
+//        carRepository.save(car);
 
         // Add parts
         List<CarPart> carParts = carInfo.getParts();
@@ -144,7 +164,7 @@ public class OrderController {
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
         Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
 //        Order order = new Order();
-        orderRepository.save(order);
+//        orderRepository.save(order);
 
         return orderDTO;
     }

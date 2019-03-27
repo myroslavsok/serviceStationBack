@@ -14,8 +14,14 @@ public class Client {
         this.phoneNumber = phoneNumber;
     }
 
+    public Client(Long id, String name, String phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     String name;

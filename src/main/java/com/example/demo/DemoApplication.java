@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.domains.Client;
 import com.example.demo.domains.car.Make;
 import com.example.demo.domains.car.Model;
+import com.example.demo.repositories.ClientRepository;
 import com.example.demo.repositories.MakeRepository;
 import com.example.demo.repositories.ModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,13 @@ import java.util.List;
 public class DemoApplication {
 
 	@Autowired
-	ModelRepository modelRepository;
+	private ModelRepository modelRepository;
 
 	@Autowired
-	MakeRepository makeRepository;
+	private MakeRepository makeRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -32,18 +37,17 @@ public class DemoApplication {
 
 		String unsetValue = "Не вказано";
 
+		// add default make
 		Make make = new Make(Long.valueOf("1"), unsetValue);
 		makeRepository.save(make);
 
+		// add default model
+		Model model = new Model(Long.valueOf("1"), unsetValue, make);
+		modelRepository.save(model);
 
-		List<Model> defaultEntityModels = modelRepository.findByModelName(unsetValue);
-		if (defaultEntityModels.size() == 0) {
-			Model model = new Model(Long.valueOf("2"), unsetValue, make);
-			modelRepository.save(model);
-			System.out.println("add");
-		}
+		// add default client
+		Client client = new Client(Long.valueOf("1"), unsetValue, unsetValue);
+		clientRepository.save(client);
 
-		System.out.println("don't add");
-		defaultEntityModels.forEach(model -> System.out.println(model.getId() + "  " + model.getModelName()));
 	}
 }
