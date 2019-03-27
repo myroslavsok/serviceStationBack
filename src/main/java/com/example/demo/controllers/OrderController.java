@@ -64,38 +64,21 @@ public class OrderController {
         }
     }
 
-//    private Make addMakeAndModelForIt(CarInfo carInfo) throws Exception {
-//        String carMake = carInfo.getMake();
-//        String carModel = carInfo.getModel();
-//        if (carMake.equals(unsetValue) || carMake.isEmpty() &&
-//                carModel.equals(unsetValue) || carModel.isEmpty()) {
-//            return makeRepository.findById(defaultSequenceId).orElseThrow(Exception::new);
-//        } else {
-//
-//        }
-//
-//    }
-
-    @PostMapping
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
-        // add client
-        Client client = addClientToDB(orderDTO.getClientInfo());
-
-        // add make and model
-        CarInfo carInfo = orderDTO.getCarInfo();
+    private Model addMakeAndModelForIt(CarInfo carInfo) throws Exception {
         String carMake = carInfo.getMake();
         String carModel = carInfo.getModel();
-
-        Make make;
-        Model model;
-        if (!carMake.equals(unsetValue) && !carMake.isEmpty() &&
-                !carModel.equals(unsetValue) && !carModel.isEmpty()) {
-
+        // check for null
+        if (carMake.equals(unsetValue) || carMake.isEmpty() &&
+                carModel.equals(unsetValue) || carModel.isEmpty()) {
+            return modelRepository.findById(defaultSequenceId).orElseThrow(Exception::new);
+        } else {
             // Check for existance of make
+            Make make;
             ArrayList<Make> existingMakes = makeRepository.findByMakeName(carMake);
             if (existingMakes.size() >= 1) {
                 make = existingMakes.get(0);
                 // Getting model of existing make
+                Model model = new Model();
                 boolean isModelAlreadyExists = false;
                 for (Model existingModel : make.getModels()) {
                     if (existingModel.getModelName().equals(carModel)) {
@@ -107,26 +90,34 @@ public class OrderController {
                     model = new Model(carModel, make);
                     modelRepository.save(model);
                 }
+                return model;
             } else {
                 // Model can't exist without make
                 make = new Make(carMake);
-                model = new Model(carModel, make);
+                Model model = new Model(carModel, make);
                 makeRepository.save(make);
                 modelRepository.save(model);
+                return model;
             }
-
-        } else {
-            // get defaults values of Make and Model
-            make = makeRepository.findById((long) 1).orElseThrow(Exception::new);
-            model = modelRepository.findById((long) 1).orElseThrow(Exception::new);
         }
+
+    }
+
+    @PostMapping
+    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
+        // add client
+        Client client = addClientToDB(orderDTO.getClientInfo());
+
+        // add make and model
+        CarInfo carInfo = orderDTO.getCarInfo();
+        Model model = addMakeAndModelForIt(carInfo);
 
         // add car
         String carYear = carInfo.getYear();
         String carMiles = carInfo.getMiles();
         String carNumber = carInfo.getNumber();
         String carVinCode = carInfo.getVinCode();
-        Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
+//        Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
 //        carRepository.save(car);
 
         // Add parts
@@ -154,7 +145,7 @@ public class OrderController {
         carParts.forEach(carPart -> {
             allExistingParts.forEach(existingPart -> {
                 if (carPart.getName().equals(existingPart.getName())) {
-                    boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
+//                    boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
                 }
             });
         });
@@ -168,7 +159,7 @@ public class OrderController {
 
         // add order
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
-        Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
+//        Order order = new Order(client, car, orderDate, doneWork, workCost, partsCost, totalCost);
 //        Order order = new Order();
 //        orderRepository.save(order);
 
