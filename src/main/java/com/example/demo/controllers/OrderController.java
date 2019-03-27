@@ -45,6 +45,7 @@ public class OrderController {
     private BoughtPartRepository boughtPartRepository;
 
     private String unsetValue = "Не вказано";
+    private long defaultSequenceId = 1;
 
     private Client addClientToDB(ClientInfo clientInfo) throws Exception {
         String clientName = clientInfo.getName();
@@ -52,8 +53,7 @@ public class OrderController {
         Client client = new Client(clientName, clientPhone);
         // check for default and null
         if (clientName.equals(unsetValue) || clientName.equals("")) {
-            long defaultClientId = 1;
-            return clientRepository.findById(defaultClientId).orElseThrow(Exception::new);
+            return clientRepository.findById(defaultSequenceId).orElseThrow(Exception::new);
         } else {
             // check for existing
             List<Client> existingClients = clientRepository.findByNameAndPhoneNumber(clientName, clientPhone);
@@ -64,15 +64,21 @@ public class OrderController {
         }
     }
 
+//    private Make addMakeAndModelForIt(CarInfo carInfo) throws Exception {
+//        String carMake = carInfo.getMake();
+//        String carModel = carInfo.getModel();
+//        if (carMake.equals(unsetValue) || carMake.isEmpty() &&
+//                carModel.equals(unsetValue) || carModel.isEmpty()) {
+//            return makeRepository.findById(defaultSequenceId).orElseThrow(Exception::new);
+//        } else {
+//
+//        }
+//
+//    }
+
     @PostMapping
     public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws Exception {
         // add client
-//        ClientInfo clientInfo = orderDTO.getClientInfo();
-//        String clientName = clientInfo.getName();
-//        String clientPhone = clientInfo.getPhoneNumber();
-//        Client client = new Client(clientName, clientPhone);
-//        clientRepository.save(client);
-
         Client client = addClientToDB(orderDTO.getClientInfo());
 
         // add make and model

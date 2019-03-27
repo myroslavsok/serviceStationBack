@@ -31,6 +31,7 @@ public class Make {
     @OneToMany(mappedBy="make", cascade = CascadeType.ALL)
     private Set<Model> models;
 
+
     public Set<Model> getModels() {
         return models;
     }

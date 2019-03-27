@@ -11,21 +11,21 @@ public class Car {
 
     public Car() {}
 
-    public Car(String vinCode, String number, String year, String miles, Make make) {
+    public Car(String vinCode, String number, String year, String miles, Model model) {
         this.vinCode = vinCode;
         this.number = number;
         this.year = year;
         this.miles = miles;
-        this.make = make;
+        this.model = model;
     }
 
-    public Car(Long id, String vinCode, String number, String year, String miles, Make make) {
+    public Car(Long id, String vinCode, String number, String year, String miles, Model model) {
         this.id = id;
         this.vinCode = vinCode;
         this.number = number;
         this.year = year;
         this.miles = miles;
-        this.make = make;
+        this.model = model;
     }
 
     @Id
@@ -41,9 +41,9 @@ public class Car {
     private String miles;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "make_id")
+    @JoinColumn(name = "model_id")
     @JsonIgnore
-    private Make make;
+    private Model model;
 
     @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
     private Set<BoughtPart> boughtParts;
@@ -97,14 +97,6 @@ public class Car {
 
     public void setYear(String year) {
         this.year = year;
-    }
-
-    public Make getMake() {
-        return make;
-    }
-
-    public void setMake(Make make) {
-        this.make = make;
     }
 
     public String getMiles() {
