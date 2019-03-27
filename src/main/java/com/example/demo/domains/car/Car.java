@@ -1,5 +1,6 @@
 package com.example.demo.domains.car;
 
+import com.example.demo.domains.DTO.CarInfo;
 import com.example.demo.domains.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,20 +12,20 @@ public class Car {
 
     public Car() {}
 
-    public Car(String vinCode, String number, String year, String miles, Model model) {
-        this.vinCode = vinCode;
-        this.number = number;
-        this.year = year;
-        this.miles = miles;
+    public Car(Long id, CarInfo carInfo, Model model) {
+        this.id = id;
+        this.vinCode = carInfo.getVinCode();
+        this.number = carInfo.getNumber();
+        this.year = carInfo.getYear();
+        this.miles = carInfo.getMiles();
         this.model = model;
     }
 
-    public Car(Long id, String vinCode, String number, String year, String miles, Model model) {
-        this.id = id;
-        this.vinCode = vinCode;
-        this.number = number;
-        this.year = year;
-        this.miles = miles;
+    public Car(CarInfo carInfo, Model model) {
+        this.vinCode = carInfo.getVinCode();
+        this.number = carInfo.getNumber();
+        this.year = carInfo.getYear();
+        this.miles = carInfo.getMiles();
         this.model = model;
     }
 
@@ -50,6 +51,14 @@ public class Car {
 
     @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
     private Set<Order> orders;
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 
     public Long getId() {
         return id;

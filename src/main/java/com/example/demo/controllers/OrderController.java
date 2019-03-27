@@ -101,11 +101,13 @@ public class OrderController {
     }
 
     private Car addCar(CarInfo carInfo, Model model) {
-        String carYear = carInfo.getYear();
-        String carMiles = carInfo.getMiles();
-        String carNumber = carInfo.getNumber();
-        String carVinCode = carInfo.getVinCode();
-        Car car = new Car(carVinCode, carNumber, carYear, carMiles, model);
+        Car car = new Car(carInfo, model);
+        // check for default
+        if (car.getVinCode().equals(unsetValue) && car.getNumber().equals(unsetValue) &&
+            car.getYear().equals(unsetValue) && car.getMiles().equals(unsetValue) &&
+            car.getModel().getId() == 1) {
+            return car;
+        }
         return carRepository.save(car);
     }
 

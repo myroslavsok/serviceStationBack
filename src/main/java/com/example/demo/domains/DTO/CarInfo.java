@@ -8,6 +8,15 @@ public class CarInfo {
 
     public CarInfo() {}
 
+    public CarInfo(String number, String year, String miles, String vinCode, String make, String model) {
+        this.number = number;
+        this.year = year;
+        this.miles = miles;
+        this.vinCode = vinCode;
+        this.make = make;
+        this.model = model;
+    }
+
     private String number;
 
     private String year;
