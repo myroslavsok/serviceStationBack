@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="\"Order\"")
+//@Table(name="\"Order\"")
+@Table(name="OrderClient")
 public class Order {
 
     public Order() {}
@@ -17,7 +18,7 @@ public class Order {
         this.client = client;
         this.car = car;
         this.orderDate = orderDate;
-        this.doneWork = doneWork;
+        this.doneWork = workInfo.getDoneWork();
         this.workCost = workInfo.getWorkCost();
         this.partsCost = workInfo.getPartsCost();
         this.totalCost = workInfo.getTotalCost();

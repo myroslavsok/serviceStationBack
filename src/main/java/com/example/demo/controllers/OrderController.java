@@ -10,13 +10,13 @@ import com.example.demo.domains.Order;
 import com.example.demo.domains.car.*;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("orders")
@@ -113,12 +113,12 @@ public class OrderController {
 
     private void addCarParts(CarInfo carInfo) {
         List<CarPart> carParts = carInfo.getParts();
-        List<Part> existingParts = partRepository.findAll();
-        if (existingParts.size() >= 1) {
-            carParts.forEach(carPart -> {
-                AtomicBoolean partAlreadyExists = new AtomicBoolean(false);
+        carParts.forEach(carPart -> {
+            List<Part> existingParts = partRepository.findAll();
+            AtomicBoolean partAlreadyExists = new AtomicBoolean(false);
                 existingParts.forEach(existingPart -> {
-                    if (carPart.getName().equals(existingPart.getName())) {
+                    if (carPart.getName().equals(existingPart.getName()) &&
+                        carPart.getCost().equals(existingPart.getCost())) {
                         partAlreadyExists.set(true);
                     }
                 });
@@ -126,10 +126,6 @@ public class OrderController {
                     partRepository.save(new Part(carPart.getName(), carPart.getCost()));
                 }
             });
-        } else {
-            carParts.forEach(carPart ->
-                    partRepository.save(new Part(carPart.getName(), carPart.getCost())));
-        }
     }
 
     private void addBoughtParts(CarInfo carInfo, Car car) {
@@ -137,7 +133,8 @@ public class OrderController {
         List<Part> allExistingParts = partRepository.findAll();
         carParts.forEach(carPart -> {
             allExistingParts.forEach(existingPart -> {
-                if (carPart.getName().equals(existingPart.getName())) {
+                if (carPart.getName().equals(existingPart.getName()) &&
+                        carPart.getCost().equals(existingPart.getCost())) {
                     boughtPartRepository.save(new BoughtPart(existingPart, carPart.getCost(), car));
                 }
             });
@@ -166,35 +163,7 @@ public class OrderController {
         WorkInfo workInfo = orderDTO.getWorkInfo();
         LocalDate orderDate = LocalDate.parse(orderDTO.getDate());
         orderRepository.save(new Order(client, car, orderDate, workInfo));
-
         return orderDTO;
     }
-
-//    @PostMapping("client")
-//    public Client addNewTask(@RequestBody Client client) {
-//        return clientRepository.save(new Client(client.getName(), client.getPhoneNumber()));
-//    }
-
-//
-
-//    @PostMapping("model")
-//    public Model addNewModel(@RequestBody Model model) {
-//        modelRepository.save(new Model());
-////        Model model = new Model(car.getMake().);
-////        Make make = new Make();
-//    }
-
-
-//    @PostMapping("car")
-////    public Car addNewCar(@RequestBody Car car) {
-//////        Model
-////        Model model = new Model(car.getMake().);
-////        Make make = new Make();
-////
-//////        return clientRepository.save(new Client(client.getName(), client.getPhoneNumber()));
-////    }    @GetMapping
-//    public List<Order> getAllOrders() {
-//        return orderRepository.findAll();
-//    }
 
 }
