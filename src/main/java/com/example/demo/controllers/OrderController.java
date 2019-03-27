@@ -167,7 +167,21 @@ public class OrderController {
 
     @GetMapping
     public List<Order> sendAllOrders() {
-        return orderRepository.findAll();
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+
+        List<Order> orders = orderRepository.findAll();
+//        orders.forEach(order -> {
+//            WorkInfo workInfo = new WorkInfo(
+//                    order.getDoneWork(),
+//                    order.getPartsCost(),
+//                    order.getTotalCost(),
+//                    order.getWorkCost()
+//            );
+//
+//            OrderDTO orderDTO = new OrderDTO(order.getClient(), order.getCar(), workInfo, order.getOrderDate());
+//
+//        });
+        return orders;
     }
 
 }

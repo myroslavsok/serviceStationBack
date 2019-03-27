@@ -2,6 +2,7 @@ package com.example.demo.domains;
 
 import com.example.demo.domains.DTO.WorkInfo;
 import com.example.demo.domains.car.Car;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -48,7 +49,8 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
-    @JsonIgnore
+//    @JsonIgnore
+//    @JsonBackReference
     private Client client;
 
     public Long getId() {

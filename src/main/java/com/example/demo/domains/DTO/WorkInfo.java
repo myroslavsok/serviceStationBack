@@ -4,6 +4,13 @@ public class WorkInfo {
 
     public WorkInfo() {}
 
+    public WorkInfo(String doneWork, Integer partsCost, Integer totalCost, Integer workCost) {
+        this.doneWork = doneWork;
+        this.partsCost = partsCost;
+        this.totalCost = totalCost;
+        this.workCost = workCost;
+    }
+
     private String doneWork;
 
     private Integer partsCost;

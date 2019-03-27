@@ -2,6 +2,7 @@ package com.example.demo.domains;
 
 
 import com.example.demo.domains.DTO.ClientInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class Client {
     String phoneNumber;
 
     @OneToMany(mappedBy="client", cascade = CascadeType.ALL)
+//    @JsonManagedReference
     private Set<Order> orders;
 
     public Set<Order> getOrders() {

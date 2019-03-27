@@ -12,6 +12,13 @@ public class OrderDTO {
 
     public OrderDTO() {}
 
+    public OrderDTO(ClientInfo clientInfo, CarInfo carInfo, WorkInfo workInfo, String date) {
+        this.clientInfo = clientInfo;
+        this.carInfo = carInfo;
+        this.workInfo = workInfo;
+        this.date = date;
+    }
+
     private ClientInfo clientInfo;
 
     private CarInfo carInfo;
