@@ -4,6 +4,11 @@ public class ClientInfo {
 
     ClientInfo() {}
 
+    public ClientInfo(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     private String name;
 
     private String phoneNumber;

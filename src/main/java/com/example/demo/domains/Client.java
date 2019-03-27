@@ -1,6 +1,8 @@
 package com.example.demo.domains;
 
 
+import com.example.demo.domains.DTO.ClientInfo;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,15 +11,15 @@ public class Client {
 
     public Client() {}
 
-    public Client(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+    public Client(ClientInfo clientInfo) {
+        this.name = clientInfo.getName();
+        this.phoneNumber = clientInfo.getPhoneNumber();
     }
 
-    public Client(Long id, String name, String phoneNumber) {
+    public Client(Long id, ClientInfo clientInfo) {
         this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.name = clientInfo.getName();
+        this.phoneNumber = clientInfo.getPhoneNumber();
     }
 
     @Id

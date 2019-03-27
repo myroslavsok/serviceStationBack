@@ -48,15 +48,13 @@ public class OrderController {
     private long defaultSequenceId = 1;
 
     private Client addClientToDB(ClientInfo clientInfo) throws Exception {
-        String clientName = clientInfo.getName();
-        String clientPhone = clientInfo.getPhoneNumber();
-        Client client = new Client(clientName, clientPhone);
+        Client client = new Client(clientInfo);
         // check for default and null
-        if (clientName.equals(unsetValue) || clientName.equals("")) {
+        if (client.getName().equals(unsetValue) || client.getName().equals("")) {
             return clientRepository.findById(defaultSequenceId).orElseThrow(Exception::new);
         } else {
             // check for existing
-            List<Client> existingClients = clientRepository.findByNameAndPhoneNumber(clientName, clientPhone);
+            List<Client> existingClients = clientRepository.findByNameAndPhoneNumber(client.getName(), client.getPhoneNumber());
             if (existingClients.size() < 1) {
                 clientRepository.save(client);
             }
@@ -123,7 +121,8 @@ public class OrderController {
         // add car
         Car car = addCar(carInfo, model);
 
-        // Add parts
+        // add parts
+
         List<CarPart> carParts = carInfo.getParts();
         List<Part> existingParts = partRepository.findAll();
         if (existingParts.size() >= 1) {

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domains.Client;
+import com.example.demo.domains.DTO.ClientInfo;
 import com.example.demo.domains.car.Car;
 import com.example.demo.domains.car.Make;
 import com.example.demo.domains.car.Model;
@@ -52,7 +53,8 @@ public class DemoApplication {
 		modelRepository.save(model);
 
 		// add default client
-		Client client = new Client(defaultSequenceId, unsetValue, unsetValue);
+		ClientInfo clientInfo = new ClientInfo(unsetValue, unsetValue);
+		Client client = new Client(defaultSequenceId, clientInfo);
 		clientRepository.save(client);
 
 		// add default car
