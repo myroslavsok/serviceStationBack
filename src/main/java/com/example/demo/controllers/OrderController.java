@@ -96,11 +96,19 @@ public class OrderController {
                 make = new Make(carMake);
                 Model model = new Model(carModel, make);
                 makeRepository.save(make);
-                modelRepository.save(model);
-                return model;
+                return modelRepository.save(model);
             }
         }
 
+    }
+
+    private Car addCar(CarInfo carInfo, Model model) {
+        String carYear = carInfo.getYear();
+        String carMiles = carInfo.getMiles();
+        String carNumber = carInfo.getNumber();
+        String carVinCode = carInfo.getVinCode();
+        Car car = new Car(carVinCode, carNumber, carYear, carMiles, model);
+        return carRepository.save(car);
     }
 
     @PostMapping
@@ -113,12 +121,14 @@ public class OrderController {
         Model model = addMakeAndModelForIt(carInfo);
 
         // add car
-        String carYear = carInfo.getYear();
-        String carMiles = carInfo.getMiles();
-        String carNumber = carInfo.getNumber();
-        String carVinCode = carInfo.getVinCode();
-//        Car car = new Car(carVinCode, carNumber, carYear, carMiles, make);
+//        String carYear = carInfo.getYear();
+//        String carMiles = carInfo.getMiles();
+//        String carNumber = carInfo.getNumber();
+//        String carVinCode = carInfo.getVinCode();
+//        Car car = new Car(carVinCode, carNumber, carYear, carMiles, model);
 //        carRepository.save(car);
+
+        Car car = addCar(carInfo, model);
 
         // Add parts
         List<CarPart> carParts = carInfo.getParts();
