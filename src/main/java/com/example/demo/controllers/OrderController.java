@@ -170,14 +170,21 @@ public class OrderController {
         return orderDTO;
     }
 
-//    @PatchMapping("close/{id}")
-//    public OrderDTO closeOrder(@PathVariable Long id, @RequestBody String status) throws Exception {
-//        Order order = orderRepository.findById(id).orElseThrow(Exception::new);
-////        if (status.equals("0")) {
-////            return order;
-////        }
-//
-//    }
+    @PatchMapping("close/{id}")
+    public OrderDTO closeOrder(@PathVariable Long id, @RequestBody String status) throws Exception {
+        if (status.equals("")) {
+            return new OrderDTO();
+        }
+        Order order = orderRepository.findById(id).orElseThrow(Exception::new);
+        order.setStatus(status);
+        orderRepository.save(order);
+        List<Order> orders = new ArrayList<>();
+        orders.add(order);
+        List<OrderDTO> orderDTOs = OrderDTO.Transfer.orderstoOrderDTOs(orders);
+        OrderDTO orderDTO = orderDTOs.get(0);
+        orderDTO.setStatus(status);
+        return orderDTO;
+    }
 
 
 
