@@ -32,7 +32,6 @@ public class Client {
     String phoneNumber;
 
     @OneToMany(mappedBy="client", cascade = CascadeType.ALL)
-//    @JsonManagedReference
     private Set<Order> orders;
 
     public Set<Order> getOrders() {

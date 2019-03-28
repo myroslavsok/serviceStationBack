@@ -17,6 +17,16 @@ public class CarInfo {
         this.model = model;
     }
 
+    public CarInfo(String number, String year, String miles, String vinCode, String make, String model, List<CarPart> parts) {
+        this.number = number;
+        this.year = year;
+        this.miles = miles;
+        this.vinCode = vinCode;
+        this.make = make;
+        this.model = model;
+        this.parts = parts;
+    }
+
     private String number;
 
     private String year;

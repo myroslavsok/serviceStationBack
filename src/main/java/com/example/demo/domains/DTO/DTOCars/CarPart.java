@@ -4,6 +4,11 @@ public class CarPart {
 
     public CarPart() {}
 
+    public CarPart(String name, String cost) {
+        this.name = name;
+        this.cost = cost;
+    }
+
     private String name;
 
     private String cost;

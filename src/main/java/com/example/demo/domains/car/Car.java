@@ -5,6 +5,7 @@ import com.example.demo.domains.Order;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,10 +48,10 @@ public class Car {
     private Model model;
 
     @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
-    private Set<BoughtPart> boughtParts;
+    private List<BoughtPart> boughtParts;
 
     @OneToMany(mappedBy="car", cascade = CascadeType.ALL)
-    private Set<Order> orders;
+    private List<BoughtPart> orders;
 
     public Model getModel() {
         return model;
@@ -68,19 +69,19 @@ public class Car {
         this.id = id;
     }
 
-    public Set<BoughtPart> getBoughtParts() {
+    public List<BoughtPart> getBoughtParts() {
         return boughtParts;
     }
 
-    public void setBoughtParts(Set<BoughtPart> boughtParts) {
+    public void setBoughtParts(List<BoughtPart> boughtParts) {
         this.boughtParts = boughtParts;
     }
 
-    public Set<Order> getOrders() {
+    public List<BoughtPart> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<BoughtPart> orders) {
         this.orders = orders;
     }
 

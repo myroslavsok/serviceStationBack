@@ -49,8 +49,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
-//    @JsonIgnore
-//    @JsonBackReference
+    @JsonIgnore
     private Client client;
 
     public Long getId() {

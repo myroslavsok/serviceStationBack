@@ -12,10 +12,15 @@ import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("orders")
@@ -166,22 +171,53 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> sendAllOrders() {
+    public List<OrderDTO> sendAllOrders() {
         List<OrderDTO> orderDTOs = new ArrayList<>();
 
         List<Order> orders = orderRepository.findAll();
-//        orders.forEach(order -> {
-//            WorkInfo workInfo = new WorkInfo(
-//                    order.getDoneWork(),
-//                    order.getPartsCost(),
-//                    order.getTotalCost(),
-//                    order.getWorkCost()
-//            );
-//
-//            OrderDTO orderDTO = new OrderDTO(order.getClient(), order.getCar(), workInfo, order.getOrderDate());
-//
-//        });
-        return orders;
+
+        orders.forEach(order -> {
+            // parsing workInfo
+            WorkInfo workInfo = new WorkInfo(
+                    order.getDoneWork(),
+                    order.getPartsCost(),
+                    order.getTotalCost(),
+                    order.getWorkCost()
+            );
+
+            Car car = order.getCar();
+
+            // parsing parts for car
+            List<BoughtPart> boughtParts = car.getBoughtParts();
+            List<CarPart> carParts = boughtParts.stream()
+                    .map(boughtPart -> new CarPart(
+                            boughtPart.getPart().getName(),
+                            boughtPart.getCost()))
+                    .collect(Collectors.toList());
+
+            // parsing car
+            CarInfo carInfo = new CarInfo(
+                    car.getNumber(),
+                    car.getYear(),
+                    car.getMiles(),
+                    car.getVinCode(),
+                    car.getModel().getMake().getMakeName(),
+                    car.getModel().getModelName(),
+                    carParts
+            );
+
+            // parsing client
+            Client client = order.getClient();
+            ClientInfo clientInfo = new ClientInfo(
+                    client.getName(),
+                    client.getPhoneNumber()
+            );
+
+            OrderDTO orderDTO = new OrderDTO(clientInfo, carInfo, workInfo, order.getOrderDate().toString());
+            orderDTOs.add(orderDTO);
+        });
+
+        return orderDTOs;
     }
 
 }
