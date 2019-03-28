@@ -213,7 +213,13 @@ public class OrderController {
                     client.getPhoneNumber()
             );
 
-            OrderDTO orderDTO = new OrderDTO(clientInfo, carInfo, workInfo, order.getOrderDate().toString());
+            OrderDTO orderDTO = new OrderDTO(
+                    clientInfo,
+                    carInfo, workInfo,
+                    order.getOrderDate().toString(),
+                    order.getStatus(),
+                    order.getId()
+            );
             orderDTOs.add(orderDTO);
         });
 

@@ -19,6 +19,21 @@ public class OrderDTO {
         this.date = date;
     }
 
+    public OrderDTO(
+            ClientInfo clientInfo,
+            CarInfo carInfo,
+            WorkInfo workInfo,
+            String date,
+            String orderStatus,
+            Long orderKey) {
+        this.clientInfo = clientInfo;
+        this.carInfo = carInfo;
+        this.workInfo = workInfo;
+        this.date = date;
+        this.orderKey = orderKey;
+        this.orderStatus = orderStatus;
+    }
+
     private ClientInfo clientInfo;
 
     private CarInfo carInfo;
@@ -27,8 +42,28 @@ public class OrderDTO {
 
     private String date;
 
+    private Long orderKey;
+
+    private String orderStatus;
+
     public String getDate() {
         return date;
+    }
+
+    public Long getOrderKey() {
+        return orderKey;
+    }
+
+    public void setOrderKey(Long orderKey) {
+        this.orderKey = orderKey;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public void setDate(String date) {
