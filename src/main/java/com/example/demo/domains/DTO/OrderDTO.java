@@ -1,12 +1,5 @@
 package com.example.demo.domains.DTO;
 
-import com.example.demo.domains.Client;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.time.LocalDate;
-
 
 public class OrderDTO {
 
@@ -24,14 +17,14 @@ public class OrderDTO {
             CarInfo carInfo,
             WorkInfo workInfo,
             String date,
-            String orderStatus,
-            Long orderKey) {
+            String status,
+            Long key) {
         this.clientInfo = clientInfo;
-        this.carInfo = carInfo;
+        this.carInfo = carInfo; c
         this.workInfo = workInfo;
         this.date = date;
-        this.orderKey = orderKey;
-        this.orderStatus = orderStatus;
+        this.key = key;
+        this.status = status;
     }
 
     private ClientInfo clientInfo;
@@ -42,28 +35,28 @@ public class OrderDTO {
 
     private String date;
 
-    private Long orderKey;
+    private Long key;
 
-    private String orderStatus;
+    private String status;
 
     public String getDate() {
         return date;
     }
 
-    public Long getOrderKey() {
-        return orderKey;
+    public Long getKey() {
+        return key;
     }
 
-    public void setOrderKey(Long orderKey) {
-        this.orderKey = orderKey;
+    public void setKey(Long key) {
+        this.key = key;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setDate(String date) {
