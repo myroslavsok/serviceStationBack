@@ -40,7 +40,7 @@ public class Order {
 
     private Integer totalCost;
 
-    private String status = "New";
+    private String status = "new";
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")

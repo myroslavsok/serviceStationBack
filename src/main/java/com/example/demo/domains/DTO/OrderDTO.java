@@ -1,7 +1,71 @@
 package com.example.demo.domains.DTO;
 
 
+import com.example.demo.domains.Client;
+import com.example.demo.domains.DTO.DTOCars.CarPart;
+import com.example.demo.domains.Order;
+import com.example.demo.domains.car.BoughtPart;
+import com.example.demo.domains.car.Car;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class OrderDTO {
+
+    static public class Transfer {
+        public static List<OrderDTO> orderstoOrderDTOs(List<Order> orders) {
+            List<OrderDTO> orderDTOs = new ArrayList<>();
+
+            orders.forEach(order -> {
+                // parsing workInfo
+                WorkInfo workInfo = new WorkInfo(
+                        order.getDoneWork(),
+                        order.getPartsCost(),
+                        order.getTotalCost(),
+                        order.getWorkCost()
+                );
+
+                Car car = order.getCar();
+
+                // parsing parts for car
+                List<BoughtPart> boughtParts = car.getBoughtParts();
+                List<CarPart> carParts = boughtParts.stream()
+                        .map(boughtPart -> new CarPart(
+                                boughtPart.getPart().getName(),
+                                boughtPart.getCost()))
+                        .collect(Collectors.toList());
+
+                // parsing car
+                CarInfo carInfo = new CarInfo(
+                        car.getNumber(),
+                        car.getYear(),
+                        car.getMiles(),
+                        car.getVinCode(),
+                        car.getModel().getMake().getMakeName(),
+                        car.getModel().getModelName(),
+                        carParts
+                );
+
+                // parsing client
+                Client client = order.getClient();
+                ClientInfo clientInfo = new ClientInfo(
+                        client.getName(),
+                        client.getPhoneNumber()
+                );
+
+                OrderDTO orderDTO = new OrderDTO(
+                        clientInfo,
+                        carInfo, workInfo,
+                        order.getOrderDate().toString(),
+                        order.getStatus(),
+                        order.getId()
+                );
+                orderDTOs.add(orderDTO);
+            });
+            return orderDTOs;
+        }
+    }
 
     public OrderDTO() {}
 
@@ -20,7 +84,7 @@ public class OrderDTO {
             String status,
             Long key) {
         this.clientInfo = clientInfo;
-        this.carInfo = carInfo; c
+        this.carInfo = carInfo;
         this.workInfo = workInfo;
         this.date = date;
         this.key = key;

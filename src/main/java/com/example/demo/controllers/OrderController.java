@@ -170,60 +170,21 @@ public class OrderController {
         return orderDTO;
     }
 
+//    @PatchMapping("close/{id}")
+//    public OrderDTO closeOrder(@PathVariable Long id, @RequestBody String status) throws Exception {
+//        Order order = orderRepository.findById(id).orElseThrow(Exception::new);
+////        if (status.equals("0")) {
+////            return order;
+////        }
+//
+//    }
+
+
+
     @GetMapping
     public List<OrderDTO> sendAllOrders() {
-        List<OrderDTO> orderDTOs = new ArrayList<>();
-
         List<Order> orders = orderRepository.findAll();
-
-        orders.forEach(order -> {
-            // parsing workInfo
-            WorkInfo workInfo = new WorkInfo(
-                    order.getDoneWork(),
-                    order.getPartsCost(),
-                    order.getTotalCost(),
-                    order.getWorkCost()
-            );
-
-            Car car = order.getCar();
-
-            // parsing parts for car
-            List<BoughtPart> boughtParts = car.getBoughtParts();
-            List<CarPart> carParts = boughtParts.stream()
-                    .map(boughtPart -> new CarPart(
-                            boughtPart.getPart().getName(),
-                            boughtPart.getCost()))
-                    .collect(Collectors.toList());
-
-            // parsing car
-            CarInfo carInfo = new CarInfo(
-                    car.getNumber(),
-                    car.getYear(),
-                    car.getMiles(),
-                    car.getVinCode(),
-                    car.getModel().getMake().getMakeName(),
-                    car.getModel().getModelName(),
-                    carParts
-            );
-
-            // parsing client
-            Client client = order.getClient();
-            ClientInfo clientInfo = new ClientInfo(
-                    client.getName(),
-                    client.getPhoneNumber()
-            );
-
-            OrderDTO orderDTO = new OrderDTO(
-                    clientInfo,
-                    carInfo, workInfo,
-                    order.getOrderDate().toString(),
-                    order.getStatus(),
-                    order.getId()
-            );
-            orderDTOs.add(orderDTO);
-        });
-
-        return orderDTOs;
+        return OrderDTO.Transfer.orderstoOrderDTOs(orders);
     }
 
 }
