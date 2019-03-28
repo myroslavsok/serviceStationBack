@@ -4,6 +4,10 @@ public class CarMake {
 
     public CarMake() {}
 
+    public CarMake(String makeName) {
+        this.makeName = makeName;
+    }
+
     private String makeName;
 
     public String getMakeName() {

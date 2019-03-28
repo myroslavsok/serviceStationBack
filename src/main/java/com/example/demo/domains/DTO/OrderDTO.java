@@ -2,10 +2,14 @@ package com.example.demo.domains.DTO;
 
 
 import com.example.demo.domains.Client;
+import com.example.demo.domains.DTO.DTOCars.CarMake;
+import com.example.demo.domains.DTO.DTOCars.CarModel;
 import com.example.demo.domains.DTO.DTOCars.CarPart;
 import com.example.demo.domains.Order;
 import com.example.demo.domains.car.BoughtPart;
 import com.example.demo.domains.car.Car;
+import com.example.demo.domains.car.Make;
+import com.example.demo.domains.car.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,7 @@ public class OrderDTO {
             });
             return orderDTOs;
         }
+
     }
 
     public OrderDTO() {}

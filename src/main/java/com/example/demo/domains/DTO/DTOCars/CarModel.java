@@ -4,12 +4,21 @@ public class CarModel {
 
     public CarModel() {}
 
-    public String getName() {
-        return name;
+    public CarModel(String modelName, CarMake carMake) {
+        this.modelName = modelName;
+        this.carMake = carMake;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private String modelName;
+
+    private CarMake carMake;
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     public CarMake getCarMake() {
@@ -20,8 +29,6 @@ public class CarModel {
         this.carMake = carMake;
     }
 
-    private String name;
 
-    private CarMake carMake;
 
 }

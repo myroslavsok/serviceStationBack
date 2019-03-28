@@ -24,7 +24,7 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public String modelName;
+    private String modelName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "make_id")

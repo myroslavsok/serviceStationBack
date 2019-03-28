@@ -12,15 +12,10 @@ import com.example.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("orders")
@@ -191,5 +186,7 @@ public class OrderController {
         List<Order> orders = orderRepository.findAll();
         return OrderDTO.Transfer.orderstoOrderDTOs(orders);
     }
+
+
 
 }
