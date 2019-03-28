@@ -170,8 +170,8 @@ public class OrderController {
         return orderDTO;
     }
 
-    @PatchMapping("close/{id}")
-    public OrderDTO closeOrder(@PathVariable Long id, @RequestBody String status) throws Exception {
+    @PatchMapping("close-open/order/{id}")
+    public OrderDTO closeAndOpenOrder(@PathVariable Long id, @RequestBody String status) throws Exception {
         if (status.equals("")) {
             return new OrderDTO();
         }
@@ -181,9 +181,7 @@ public class OrderController {
         List<Order> orders = new ArrayList<>();
         orders.add(order);
         List<OrderDTO> orderDTOs = OrderDTO.Transfer.orderstoOrderDTOs(orders);
-        OrderDTO orderDTO = orderDTOs.get(0);
-        orderDTO.setStatus(status);
-        return orderDTO;
+        return orderDTOs.get(0);
     }
 
 
