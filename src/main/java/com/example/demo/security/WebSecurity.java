@@ -1,4 +1,4 @@
-package com.example.demo.security.domains;
+package com.example.demo.security;
 
 
 import com.example.demo.security.JWTAuthenticationFilter;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 
 import static com.example.demo.security.SecurityConstants.SIGN_UP_URL;
 
@@ -54,4 +53,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
+
+
+
 }
