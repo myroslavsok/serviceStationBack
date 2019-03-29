@@ -2,14 +2,12 @@ package com.example.demo.domains;
 
 import com.example.demo.domains.DTO.WorkInfo;
 import com.example.demo.domains.car.Car;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-//@Table(name="\"Order\"")
 @Table(name="OrderClient")
 public class Order {
 
