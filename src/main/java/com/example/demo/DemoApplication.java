@@ -23,11 +23,6 @@ import java.util.List;
 @SpringBootApplication
 public class DemoApplication {
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 	@Autowired
 	private ModelRepository modelRepository;
 
