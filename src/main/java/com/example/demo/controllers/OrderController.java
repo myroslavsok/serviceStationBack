@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("orders")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class OrderController {
 
     @Autowired
