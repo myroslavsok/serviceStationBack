@@ -20,10 +20,10 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	compile "org.springframework.boot:spring-boot-starter-security"
-	compile 'javax.xml.bind:jaxb-api:2.3.0'
-	compile 'com.auth0:mvc-auth-commons:1.+'
-	compile "com.auth0:java-jwt:3.4.0"
+//	compile "org.springframework.boot:spring-boot-starter-security"
+//	compile 'javax.xml.bind:jaxb-api:2.3.0'
+//	compile 'com.auth0:mvc-auth-commons:1.+'
+//	compile "com.auth0:java-jwt:3.4.0"
 }
 
 
